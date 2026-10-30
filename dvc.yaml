@@ -18,3 +18,11 @@ stages:
     metrics:
       - reports/model_metrics.json:
           cache: false
+
+  register:
+    cmd: python src/model/register.py
+    deps:
+      - register/model_metrics.json
+      - src/model/register.py
+    outs:
+      - reports/register_version.json
