@@ -16,3 +16,27 @@ stages:
       hash: md5
       md5: d8273552ed146dccc3712959ea5fa34c
       size: 54
+  train:
+    cmd: python src/model/train.py
+    deps:
+    - path: data/raw/gym_ghosts_master.csv
+      hash: md5
+      md5: de2eb4c701f97e04e404e0039712c1b7
+      size: 4251897
+    - path: reports/data_validation.json
+      hash: md5
+      md5: d8273552ed146dccc3712959ea5fa34c
+      size: 54
+    - path: src/model/train.py
+      hash: md5
+      md5: eacb5a47431240ec22f1237a1fb7f115
+      size: 2027
+    outs:
+    - path: models/model.pkl
+      hash: md5
+      md5: e6d7d02e521c80d5cea426c7a9869773
+      size: 1053241
+    - path: reports/model_metrics.json
+      hash: md5
+      md5: 0a7189974da8c33068a176f924135970
+      size: 105

@@ -1,10 +1,13 @@
+import os
+import json
+import re
+import joblib
 import pandas as pd
 import mlflow
 import mlflow.sklearn
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, roc_auc_score
-import re
 
 df = pd.read_csv("data/raw/gym_ghosts_master.csv")
 y = df["churned_by_february"]
@@ -43,8 +46,13 @@ with mlflow.start_run() as run:
     print("accuracy:", acc)
     print("roc_auc:", auc)
     print("data_version:", f"dvc:{data_md5}")
-    import os
-    import json
+
+    # 模型落盘，供 DVC outs
+    os.makedirs("models", exist_ok=True)
+    joblib.dump(model, "models/model.pkl")
+    print("saved models/model.pkl")
+
+    # 指标落盘，供 DVC metrics
     os.makedirs("reports", exist_ok=True)
     with open("reports/model_metrics.json", "w") as f:
         json.dump(
