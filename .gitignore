@@ -5,4 +5,7 @@ mlflow.db.tags
 data/raw/*.tags
 .vscode/
 __pycache__/
-*.pyc
+*.pycreports/data_validation.json
+reports/model_metrics.json
+reports/registered_version.json
+models/
