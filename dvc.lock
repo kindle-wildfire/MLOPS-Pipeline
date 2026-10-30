@@ -1,0 +1,18 @@
+schema: '2.0'
+stages:
+  validate:
+    cmd: python src/data/GX.py
+    deps:
+    - path: data/raw/gym_ghosts_master.csv
+      hash: md5
+      md5: de2eb4c701f97e04e404e0039712c1b7
+      size: 4251897
+    - path: src/data/GX.py
+      hash: md5
+      md5: d2c282b61ff9d78b1932e76f6d05236f
+      size: 1283
+    outs:
+    - path: reports/data_validation.json
+      hash: md5
+      md5: d8273552ed146dccc3712959ea5fa34c
+      size: 54

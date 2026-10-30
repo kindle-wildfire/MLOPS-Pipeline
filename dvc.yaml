@@ -1,0 +1,20 @@
+stages:
+  validate:
+    cmd: python src/data/GX.py
+    deps:
+      - data/raw/gym_ghosts_master.csv
+      - src/data/GX.py
+    outs:
+      - reports/data_validation.json
+
+  train:
+    cmd: python src/model/train.py
+    deps:
+      - data/raw/gym_ghosts_master.csv
+      - src/model/train.py
+      - reports/data_validation.json   # 校验通过才训练
+    outs:
+      - models/model.pkl
+    metrics:
+      - reports/model_metrics.json:
+          cache: false
