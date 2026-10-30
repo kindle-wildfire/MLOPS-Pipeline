@@ -43,8 +43,13 @@ with mlflow.start_run() as run:
     print("accuracy:", acc)
     print("roc_auc:", auc)
     print("data_version:", f"dvc:{data_md5}")
-
-import os, joblib
-os.makedirs("models", exist_ok=True)
-joblib.dump(model, "models/model.pkl")
-print("saved models/model.pkl")
+import os
+import json
+os.makedirs("reports", exist_ok=True)
+with open("reports/model_metrics.json", "w") as f:
+    json.dump(
+        {"accuracy": acc, "roc_auc": auc, "run_id": run.info.run_id},
+        f,
+        indent=2,
+    )
+print("saved reports/model_metrics.json")
