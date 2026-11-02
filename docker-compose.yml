@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  mlflow:
+    image: python:3.12-slim
+    container_name: mlflow-server
+    working_dir: /app
+    # 安装 mlflow 并启动 Server
+    command: >
+      sh -c "pip install -i https://pypi.tuna.tsinghua.edu.cn/simple mlflow==3.16.1 &&
+             mlflow server --host 0.0.0.0 --port 5000 --backend-store-uri sqlite:///mlflow.db --serve-artifacts --artifacts-destination ./mlartifacts --allowed-hosts '*'"
+    ports:
+      - "5000:5000"
+    volumes:
+      # 挂载宿主机的数据库和产物，让服务能读到之前训练的数据
+      - ./mlflow.db:/app/mlflow.db
+      - ./mlartifacts:/app/mlartifacts
+
+  serving:
+    build: .
+    container_name: gym-serving
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mlflow
+    environment:
+      - PYTHONUNBUFFERED=1
+    # 此服务不需要挂载任何模型文件，因为它走 HTTP 从 mlflow 拉取

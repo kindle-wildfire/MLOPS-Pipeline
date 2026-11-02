@@ -8,7 +8,7 @@ with open("reports/model_metrics.json") as f:
     metrics = json.load(f)
 run_id = metrics["run_id"]
 
-mlflow.set_tracking_uri("sqlite:///mlflow.db")
+mlflow.set_tracking_uri("http://127.0.0.1:5000")
 
 # 2. 从 run 注册模型
 model_uri = f"runs:/{run_id}/model"

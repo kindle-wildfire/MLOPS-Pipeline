@@ -22,7 +22,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 with open("data/raw/gym_ghosts_master.csv.dvc") as f:
     content = f.read()
 data_md5 = re.search(r"md5:\s*([a-f0-9]+)", content).group(1)
-mlflow.set_tracking_uri("sqlite:///mlflow.db")
+mlflow.set_tracking_uri("http://127.0.0.1:5000")
 mlflow.set_experiment("gym_churn")
 
 with mlflow.start_run() as run:
