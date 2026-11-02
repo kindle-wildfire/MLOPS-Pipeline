@@ -1,0 +1,19 @@
+name: MLOps CI
+
+on:
+  push:
+    branches: [ "main", "master" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Validate Compose file
+      run: docker compose config
+
+    - name: Build Serving Image
+      run: docker compose build serving
